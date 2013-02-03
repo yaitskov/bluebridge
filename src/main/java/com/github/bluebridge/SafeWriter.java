@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.ByteBuffer;
 
 /**
  * Created with IntelliJ IDEA.
@@ -26,14 +27,8 @@ public class SafeWriter extends OutputStream {
     }
 
     protected void writeSize(int size) throws IOException {
-        byte[] output = new byte[4];
-        output[0] = (byte) (size >>> 24);
-        output[1] = (byte) ((size & 0xff0000) >>> 16);
-        output[2] = (byte) ((size & 0xff00) >>> 8);
-        output[3] = (byte) (size & 0xff);
-        LOGGER.debug("write {} byte(s) as {}", size,
-                StringUtils.join(ScalUtils.wrapList(output), ", "));
-        unsafeStream.write(output);
+        LOGGER.debug("write {} byte(s)", size);
+        unsafeStream.write(ByteBuffer.allocate(4).putInt(size).array());
     }
 
     @Override

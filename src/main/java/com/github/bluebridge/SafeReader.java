@@ -5,8 +5,12 @@ import org.dan.lastjcl.ScalUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.nio.ByteBuffer;
+import java.nio.IntBuffer;
 import java.util.concurrent.TimeoutException;
 
 /**
@@ -52,13 +56,9 @@ public class SafeReader {
         return result;
     }
 
-    public int bytesToInt(byte[] input) {
-        int result = 0;
-        for (byte p : input) {
-            result <<= 8;
-            result ^= p;
-        }
-        return result;
+    public int bytesToInt(byte[] input) throws IOException {
+        ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(input));
+        return  ois.readInt();
     }
 
     public byte[] readPackage() throws IOException, TimeoutException {
