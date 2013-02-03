@@ -1,5 +1,6 @@
 package com.github.bluebridge;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,7 @@ import javax.bluetooth.LocalDevice;
  * Time: 7:21 PM
  * To change this template use File | Settings | File Templates.
  */
+@Ignore
 public class LocalDeviceTest {
 
     private static final Logger logger =
