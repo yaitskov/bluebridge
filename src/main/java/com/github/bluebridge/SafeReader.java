@@ -1,5 +1,7 @@
 package com.github.bluebridge;
 
+import org.apache.commons.lang3.StringUtils;
+import org.dan.lastjcl.ScalUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,12 +46,18 @@ public class SafeReader {
 
     protected int readSize() throws IOException, TimeoutException {
         byte[] size = readData(4);
+        int result = bytesToInt(size);
+        LOGGER.debug("awaiting {} byte(s) as {}", result,
+                StringUtils.join(ScalUtils.wrapList(size), ", "));
+        return result;
+    }
+
+    public int bytesToInt(byte[] input) {
         int result = 0;
-        for (byte p : size) {
+        for (byte p : input) {
             result <<= 8;
             result ^= p;
         }
-        LOGGER.debug("awaiting {} byte(s)", result);
         return result;
     }
 

@@ -1,5 +1,7 @@
 package com.github.bluebridge;
 
+import org.apache.commons.lang3.StringUtils;
+import org.dan.lastjcl.ScalUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +31,8 @@ public class SafeWriter extends OutputStream {
         output[1] = (byte) ((size & 0xff0000) >>> 16);
         output[2] = (byte) ((size & 0xff00) >>> 8);
         output[3] = (byte) (size & 0xff);
-        LOGGER.debug("write {} byte(s)", size);
+        LOGGER.debug("write {} byte(s) as {}", size,
+                StringUtils.join(ScalUtils.wrapList(output), ", "));
         unsafeStream.write(output);
     }
 
