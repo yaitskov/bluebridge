@@ -57,6 +57,7 @@ public class RfcommClient {
             SafeReader input = new SafeReader(sc.openInputStream());
 
             String message = "Hello world. Big man.";
+
             output.write(message.getBytes());
             LOGGER.debug("message was sent.");
 
