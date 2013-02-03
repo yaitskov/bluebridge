@@ -76,7 +76,8 @@ public class SafeReader {
             firstFree += read;
             if (read > 0) {
                 inputStarted = System.currentTimeMillis();
-            } else if (firstFree == size) {
+            }
+            if (firstFree == size) {
                 return result;
             }
 
