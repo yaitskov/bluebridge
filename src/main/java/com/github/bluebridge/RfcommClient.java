@@ -1,6 +1,7 @@
 package com.github.bluebridge;
 
 import org.apache.commons.lang3.StringUtils;
+import org.dan.lastjcl.ScalUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,8 +68,11 @@ public class RfcommClient {
             byte[] hashExpected = md.digest(message.getBytes());
 
             LOGGER.debug("hashes equal {}", Arrays.equals(hashExpected, hashGot));
-            LOGGER.debug("got {} expected {}", StringUtils.join(hashGot),
-                    StringUtils.join(hashExpected));
+            LOGGER.debug("got {} expected {}",
+                    StringUtils.join(
+                            ScalUtils.wrapList(hashGot), ", "),
+                    StringUtils.join(
+                            ScalUtils.wrapList(hashExpected), ", "));
         } finally {
             LOGGER.info("close connection");
             con.close();

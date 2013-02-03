@@ -1,6 +1,7 @@
 package com.github.bluebridge;
 
 import org.apache.commons.lang3.StringUtils;
+import org.dan.lastjcl.ScalUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -66,7 +67,9 @@ public class ServerThread extends Thread {
         LOGGER.debug("message is '{}'", message);
         MessageDigest md = MessageDigest.getInstance("MD5");
         byte[] hash = md.digest(data);
-        LOGGER.debug("md5 digest of input {}", StringUtils.join(hash, ", "));
+        LOGGER.debug("md5 digest of input {}",
+                StringUtils.join(
+                        ScalUtils.wrapList(hash), ", "));
         output.write(hash);
     }
 
