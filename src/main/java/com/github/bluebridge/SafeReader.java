@@ -19,7 +19,7 @@ public class SafeReader {
     private static final Logger LOGGER = LoggerFactory.getLogger(SafeReader.class);
     private long readTimeout = 10000;
 
-    private int maxSize = 1024;
+    private int maxSize = 1024 * 1024;
     private InputStream unsafeStream;
 
     public SafeReader(InputStream unsafeStream) {
