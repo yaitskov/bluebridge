@@ -5,6 +5,8 @@ import org.dan.lastjcl.ScalUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
@@ -20,15 +22,15 @@ public class SafeWriter extends OutputStream {
 
     private static final Logger LOGGER =
             LoggerFactory.getLogger(SafeWriter.class);
-    private OutputStream unsafeStream;
+    private DataOutputStream unsafeStream;
 
     public SafeWriter(OutputStream unsafeStream) {
-        this.unsafeStream = unsafeStream;
+        this.unsafeStream = new DataOutputStream(unsafeStream);
     }
 
     protected void writeSize(int size) throws IOException {
         LOGGER.debug("write {} byte(s)", size);
-        unsafeStream.write(ByteBuffer.allocate(4).putInt(size).array());
+        unsafeStream.write(size);
     }
 
     @Override

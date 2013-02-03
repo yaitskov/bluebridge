@@ -5,10 +5,7 @@ import org.dan.lastjcl.ScalUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 import java.util.concurrent.TimeoutException;
@@ -26,10 +23,10 @@ public class SafeReader {
     private long readTimeout = 10000;
 
     private int maxSize = 1024 * 1024;
-    private InputStream unsafeStream;
+    private DataInputStream unsafeStream;
 
     public SafeReader(InputStream unsafeStream) {
-        this.unsafeStream = unsafeStream;
+        this.unsafeStream = new DataInputStream(unsafeStream);
     }
 
     public long getReadTimeout() {
@@ -57,7 +54,7 @@ public class SafeReader {
     }
 
     public int bytesToInt(byte[] input) throws IOException {
-        ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(input));
+        DataInputStream ois = new DataInputStream(new ByteArrayInputStream(input));
         return  ois.readInt();
     }
 
