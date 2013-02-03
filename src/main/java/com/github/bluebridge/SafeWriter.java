@@ -41,13 +41,13 @@ public class SafeWriter extends OutputStream {
 
     @Override
     public void write(byte[] bytes) throws IOException {
-        write(bytes.length);
+        writeSize(bytes.length);
         unsafeStream.write(bytes);
     }
 
     @Override
     public void write(byte[] bytes, int ofs, int len) throws IOException {
-        write(len);
+        writeSize(len);
         unsafeStream.write(bytes, ofs, len);
     }
 
