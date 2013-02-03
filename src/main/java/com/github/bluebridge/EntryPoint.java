@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.bluetooth.*;
+import javax.microedition.io.Connector;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,7 @@ public class EntryPoint {
         logger.info("main started");
         final Object inquiryCompletedEvent = new Object();
 
-        final List devicesDiscovered = new ArrayList();
+        final List<RemoteDevice> devicesDiscovered = new ArrayList();
         devicesDiscovered.clear();
 
         DiscoveryListener listener = new DiscoveryListener() {
@@ -65,6 +66,7 @@ public class EntryPoint {
                 logger.info("wait for device inquiry to complete...");
                 inquiryCompletedEvent.wait();
                 logger.info("{} device(s) found", devicesDiscovered.size());
+
             }
         }
     }
