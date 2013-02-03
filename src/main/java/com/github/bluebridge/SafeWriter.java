@@ -29,8 +29,10 @@ public class SafeWriter extends OutputStream {
     }
 
     protected void writeSize(int size) throws IOException {
-        LOGGER.debug("write {} byte(s)", size);
-        unsafeStream.write(size);
+        byte[] packed = ByteBuffer.allocate(4).putInt(size).array();
+        LOGGER.debug("write {} byte(s) as {}", size,
+                StringUtils.join(ScalUtils.wrapList(packed), ","));
+        unsafeStream.write(packed);
     }
 
     @Override
