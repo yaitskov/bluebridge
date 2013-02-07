@@ -65,12 +65,18 @@ public class MainWindow {
 
     private void buildBody() {
         mainPanel = new JPanel();
-        mainPanel.setLayout(new FlowLayout());
-        printerList = new JList();
-        printerList.setMinimumSize(new Dimension(100, 300));
+//        BoxLayout bl = new BoxLayout(mainPanel, BoxLayout.LINE_AXIS);
+        GridBagLayout glayout = new GridBagLayout();
+        mainPanel.setLayout(glayout);
+//        mainPanel.setLayout(bl);
 
+        printerList = new JList();
         printers = new DefaultListModel();
         printerList.setModel(printers);
+//        printerList.setMinimumSize(new Dimension(100, 300));
+//        printerList.setMaximumSize(new Dimension(100, 800));
+////        printerList.setPreferredSize(new Dimension(300,300));
+        printerList.setBackground(Color.MAGENTA);
         // hook click on printer to connect
         printerList.addListSelectionListener(
                 new ListSelectionListener() {
@@ -82,9 +88,29 @@ public class MainWindow {
         );
 
         infoPanel = new JPanel();
-        infoPanel.setMinimumSize(new Dimension(300, 300));
-
+        infoPanel.setBackground(Color.BLUE);
+//        printerList.setMinimumSize(new Dimension(300, 300));
+//        printerList.setMaximumSize(new Dimension(300, 800));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridwidth = 1;
+        gbc.gridheight = 1;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weighty = 1.0;
+        gbc.weightx = 0.3;
+        glayout.setConstraints(printerList, gbc);
         mainPanel.add(printerList);
+
+        gbc = new GridBagConstraints();
+        gbc.gridwidth = 3;
+        gbc.gridheight = 1;
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.weightx = 0.8;
+        gbc.weighty = 1;
+        gbc.fill = GridBagConstraints.BOTH;
+        glayout.setConstraints(infoPanel, gbc);
         mainPanel.add(infoPanel);
     }
 
