@@ -104,7 +104,11 @@ public class MainWindow implements PrinterObserver {
         gbc.fill = GridBagConstraints.BOTH;
         gbc.weighty = 1.0;
         gbc.weightx = 0.3;
-        glayout.setConstraints(printerList, gbc);
+
+        JScrollPane printScrol = new JScrollPane(printerList);
+        JPanel jp = new JPanel();
+        jp.add(printScrol);
+        glayout.setConstraints(jp, gbc);
         mainPanel.add(printerList);
     }
 

@@ -34,6 +34,15 @@ public class FakeBusEntryPoint {
                         serviceFree.setDeviceId("new device " + newDeviceId);
                         serviceFree.setServiceName("new service " + newDeviceId);
                         result.add( serviceFree);
+
+                        newDeviceId += 1;
+
+                        PrinterServiceId noExtruder = new PrinterServiceId();
+                        noExtruder.setLongUuid("no extruder " + newDeviceId);
+                        noExtruder.setConnectionUrl("no extruder " + newDeviceId);
+                        noExtruder.setDeviceId("no extruder " + newDeviceId);
+                        noExtruder.setServiceName("no extruder " + newDeviceId);
+                        result.add( noExtruder);
                         return result;
                     }
                 },
@@ -44,6 +53,8 @@ public class FakeBusEntryPoint {
                         pp.setServiceId(serviceId);
                         if (serviceId.getServiceName().contains("NA")) {
                             pp.setStatus(PrinterStatus.NA);
+                        } else if (serviceId.getServiceName().contains("extruder")) {
+                            pp.setStatus(PrinterStatus.NO_EXTRUDER);
                         } else {
                             pp.setStatus(PrinterStatus.FREE);
                         }
