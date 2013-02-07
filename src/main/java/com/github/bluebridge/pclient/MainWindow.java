@@ -10,6 +10,7 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -40,7 +41,7 @@ public class MainWindow implements PrinterObserver {
     /**
      * Detailed information about current printer (status, etc).
      */
-    private JPanel infoPanel;
+    private DetailedPrinterView infoPanel;
     /**
      * List found printers.
      */
@@ -70,45 +71,19 @@ public class MainWindow implements PrinterObserver {
 
     private void buildBody() {
         mainPanel = new JPanel();
-//        BoxLayout bl = new BoxLayout(mainPanel, BoxLayout.LINE_AXIS);
+
         GridBagLayout glayout = new GridBagLayout();
         mainPanel.setLayout(glayout);
-//        mainPanel.setLayout(bl);
 
-        printerList = new JList();
-        printers = new DefaultListModel();
-        printerList.setModel(printers);
-        printerList.setCellRenderer(new PrinterCellRenderer());
-//        printerList.setMinimumSize(new Dimension(100, 300));
-//        printerList.setMaximumSize(new Dimension(100, 800));
-////        printerList.setPreferredSize(new Dimension(300,300));
-        printerList.setBackground(Color.MAGENTA);
-        // hook click on printer to connect
-        printerList.addListSelectionListener(
-                new ListSelectionListener() {
-                    @Override
-                    public void valueChanged(ListSelectionEvent listSelectionEvent) {
-                        activatePrinter((Printer) printerList.getSelectedValue());
-                    }
-                }
-        );
+        buildPrinterList();
+        buildInfoPanel();
 
-        infoPanel = new JPanel();
-        infoPanel.setBackground(Color.BLUE);
-//        printerList.setMinimumSize(new Dimension(300, 300));
-//        printerList.setMaximumSize(new Dimension(300, 800));
+        addPrinterToPanel(glayout);
+        addInfoPanelTo(glayout);
+    }
+
+    private void addInfoPanelTo(GridBagLayout glayout) {
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridwidth = 1;
-        gbc.gridheight = 1;
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.weighty = 1.0;
-        gbc.weightx = 0.3;
-        glayout.setConstraints(printerList, gbc);
-        mainPanel.add(printerList);
-
-        gbc = new GridBagConstraints();
         gbc.gridwidth = 3;
         gbc.gridheight = 1;
         gbc.gridx = 1;
@@ -120,9 +95,56 @@ public class MainWindow implements PrinterObserver {
         mainPanel.add(infoPanel);
     }
 
+    private void addPrinterToPanel(GridBagLayout glayout) {
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridwidth = 1;
+        gbc.gridheight = 1;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weighty = 1.0;
+        gbc.weightx = 0.3;
+        glayout.setConstraints(printerList, gbc);
+        mainPanel.add(printerList);
+    }
+
+    private void buildPrinterList() {
+        printerList = new JList();
+        printers = new DefaultListModel();
+        printerList.setModel(printers);
+        printerList.setCellRenderer(new PrinterCellRenderer());
+        printerList.setBackground(Color.MAGENTA);
+        // hook click on printer to connect
+        printerList.addListSelectionListener(
+                new ListSelectionListener() {
+                    @Override
+                    public void valueChanged(ListSelectionEvent listSelectionEvent) {
+                        activatePrinter((Printer) printerList.getSelectedValue());
+                    }
+                }
+        );
+    }
+
+    private void buildInfoPanel() {
+        infoPanel = new DetailedPrinterView();
+    }
+
+    /**
+     * Protect from double {@link #activatePrinter(Printer)} execution
+     * due click down and up.
+     */
+    private Printer currentPrinter = new NullPrinter();
+    private FileModelSelector modelSelector = new FileModelSelector();
+
     private void activatePrinter(Printer printer) {
+        if (currentPrinter != null
+                && currentPrinter.getInfo().equals(printer.getInfo())) {
+            return;
+        }
+        currentPrinter = printer;
         LOGGER.info("printer {} was selected",
                 printer.getInfo().getConnectionUrl());
+        infoPanel.setModel(printer);
         if (printer.getStatus() == PrinterStatus.NA) {
             try {
                 printer.connect();
@@ -145,52 +167,41 @@ public class MainWindow implements PrinterObserver {
         mainFrame.setVisible(true);
     }
 
-    private void buildMenu() {
-        mainMenu = new JMenuBar();
-
-        appMenu = new JMenu("Application");
-
-        JMenuItem exitItem = new JMenuItem();
-        exitItem.addActionListener(new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                mainFrame.dispose();
-            }
-        });
-        exitItem.setText("Exit");
-
-        appMenu.add(exitItem);
-
-        mainMenu.add(appMenu);
-
-        printerMenu = new JMenu("Printer");
-
+    private void buildStartPrint() {
         startPrintMenu = new JMenuItem("Print");
         startPrintMenu.setToolTipText("Start printing process");
         startPrintMenu.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                getCurrentPrinter().startPrint();
+                if (!hasPrinter()) {
+                    return;
+                }
+                File model = modelSelector.select(mainFrame);
+                if (model != null) {
+                    LOGGER.info("selected file {} for printing", model);
+                    getCurrentPrinter().startPrint(model);
+                }
             }
         });
-
         printerMenu.add(startPrintMenu);
+    }
 
+    private void buildStopPrint() {
         stopPrintMenu = new JMenuItem("Stop");
         stopPrintMenu.setToolTipText(
                 "Stop printing process. Operation cannot be rollback");
         stopPrintMenu.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                getCurrentPrinter().startPrint();
+                if (hasPrinter()) {
+                    getCurrentPrinter().abortPrint();
+                }
             }
         });
-
         printerMenu.add(stopPrintMenu);
+    }
 
-
-        printerMenu.addSeparator();
-
+    private void buildScanPrinters() {
         scanPrintersMenu = new JMenuItem("scan");
         scanPrintersMenu.setToolTipText("Update list of printers");
         scanPrintersMenu.addActionListener(new AbstractAction() {
@@ -203,11 +214,37 @@ public class MainWindow implements PrinterObserver {
                 }
             }
         });
-
         printerMenu.add(scanPrintersMenu);
+    }
+
+    private void buildAppMenu() {
+        appMenu = new JMenu("Application");
+
+        JMenuItem exitItem = new JMenuItem();
+        exitItem.addActionListener(
+                new AbstractAction() {
+                    @Override
+                    public void actionPerformed(ActionEvent actionEvent) {
+                        mainFrame.dispose();
+                    }
+                });
+        exitItem.setText("Exit");
+
+        appMenu.add(exitItem);
+        mainMenu.add(appMenu);
+    }
+
+    private void buildPrinterMenu() {
+        printerMenu = new JMenu("Printer");
+        buildStartPrint();
+        buildStopPrint();
+        printerMenu.addSeparator();
+        buildScanPrinters();
 
         mainMenu.add(printerMenu);
+    }
 
+    private void buildHelpMenu() {
         helpMenu = new JMenu("Help");
 
         JMenuItem about = new JMenuItem();
@@ -215,19 +252,34 @@ public class MainWindow implements PrinterObserver {
         about.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                JOptionPane.showMessageDialog(mainFrame, "BlueBridge 2013");
+                JOptionPane.showMessageDialog(mainFrame,
+                        "BlueBridge v1.0 2013 year");
             }
         });
         helpMenu.add(about);
         mainMenu.add(helpMenu);
     }
 
-    public Printer getCurrentPrinter() {
-        Printer result = (Printer) printerList.getSelectedValue();
-        if (result == null) {
-            return new NullPrinter();
+    private void buildMenu() {
+        mainMenu = new JMenuBar();
+
+        buildAppMenu();
+        buildPrinterMenu();
+        buildHelpMenu();
+    }
+
+    public boolean hasPrinter() {
+        if (getCurrentPrinter() instanceof NullPrinter) {
+            JOptionPane.showMessageDialog(mainFrame,
+                    "Select a printer from the list.",
+                    "No current printer", JOptionPane.OK_OPTION);
+            return false;
         }
-        return result;
+        return true;
+    }
+
+    public Printer getCurrentPrinter() {
+        return currentPrinter;
     }
 
     /**
@@ -274,8 +326,15 @@ public class MainWindow implements PrinterObserver {
         }
     }
 
+    /**
+     * It will useful if printer list shows dynamic info
+     * not only MAC and service name.
+     * But now is not useful.
+     *
+     * @param p printer with new status
+     */
     @Override
-    public void newStatus(Printer p, PrinterStatus newStatus) {
+    public void newStatus(Printer p) {
         printerList.repaint();
     }
 }

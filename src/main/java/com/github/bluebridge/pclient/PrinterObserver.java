@@ -10,5 +10,5 @@ public interface PrinterObserver {
      * Called when printer gets new status.
      * @param p printer with new status
      */
-    void newStatus(Printer p, PrinterStatus newStatus);
+    void newStatus(Printer p);
 }

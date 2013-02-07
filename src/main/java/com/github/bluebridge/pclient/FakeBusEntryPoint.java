@@ -26,6 +26,8 @@ public class FakeBusEntryPoint {
                         serviceNa.setServiceName("NA service " + newDeviceId);
                         result.add(serviceNa);
 
+                        newDeviceId += 1;
+
                         PrinterServiceId serviceFree = new PrinterServiceId();
                         serviceFree.setLongUuid("new uid " + newDeviceId);
                         serviceFree.setConnectionUrl("new conn " + newDeviceId);

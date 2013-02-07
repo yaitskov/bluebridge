@@ -3,6 +3,7 @@ package com.github.bluebridge.pclient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
@@ -23,6 +24,11 @@ public class PrinterImpl implements Printer {
         observers.add(observer);
     }
 
+    @Override
+    public void removeObserver(PrinterObserver observer) {
+        observers.remove(observer);
+    }
+
     public PrinterImpl(PrinterServiceId serviceInfo) {
         this.serviceInfo = serviceInfo;
         status = PrinterStatus.NA;
@@ -39,7 +45,7 @@ public class PrinterImpl implements Printer {
     }
 
     @Override
-    public void startPrint() {
+    public void startPrint(File model) {
         LOGGER.debug("start printing");
     }
 

@@ -11,11 +11,11 @@ public class PrinterListCell extends JPanel {
     private JLabel serviceName;
     private JLabel devId;
 
-    public PrinterListCell(Printer model) {
+    public PrinterListCell(boolean selected, Printer model) {
 
         // vertical orientation of labels
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setOpaque(false);
+        setOpaque(selected);
         setBorder(new EmptyBorder(4, 4, 4, 4));
 //        SwingUtilities.invokeLater(new Runnable() {
 //            @Override

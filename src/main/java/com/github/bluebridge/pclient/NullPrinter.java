@@ -3,6 +3,7 @@ package com.github.bluebridge.pclient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -20,12 +21,17 @@ public class NullPrinter implements Printer {
     }
 
     @Override
+    public void removeObserver(PrinterObserver observer) {
+        // do nothing
+    }
+
+    @Override
     public PrinterStatus getStatus() {
         return PrinterStatus.NA;
     }
 
     @Override
-    public void startPrint() {
+    public void startPrint(File model) {
         LOGGER.info("there is not a selected printer");
     }
 

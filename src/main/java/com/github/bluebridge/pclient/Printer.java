@@ -1,5 +1,6 @@
 package com.github.bluebridge.pclient;
 
+import java.io.File;
 import java.io.IOError;
 import java.io.IOException;
 
@@ -10,9 +11,9 @@ public interface Printer {
     PrinterStatus getStatus();
 
     /**
-     *
+     * File to be printed.
      */
-    void startPrint();
+    void startPrint(File model);
 
     /**
      * Terminate printing process.
@@ -42,4 +43,5 @@ public interface Printer {
     void disconnect() throws IOException;
 
     void addObserver(PrinterObserver observer);
+    void removeObserver(PrinterObserver observer);
 }

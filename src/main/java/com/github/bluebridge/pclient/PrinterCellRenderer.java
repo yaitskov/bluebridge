@@ -18,16 +18,17 @@ public class PrinterCellRenderer implements ListCellRenderer {
      * @param jList
      * @param o
      * @param i
-     * @param b
+     * @param selected
      * @param b1
      * @return
      */
     @Override
     public Component getListCellRendererComponent(
             JList jList, Object o,
-            int i, boolean b, boolean b1) {
+            int i, boolean selected, boolean b1) {
         Printer printer = (Printer)o;
-        PrinterListCell cell = new PrinterListCell(printer);
+        PrinterListCell cell = new PrinterListCell(selected, printer);
+
         return cell;
     }
 }
