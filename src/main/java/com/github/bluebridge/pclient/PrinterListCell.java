@@ -15,6 +15,7 @@ public class PrinterListCell extends JPanel {
 
         // vertical orientation of labels
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setOpaque(false);
         setBorder(new EmptyBorder(4, 4, 4, 4));
 //        SwingUtilities.invokeLater(new Runnable() {
 //            @Override

@@ -269,6 +269,7 @@ public class MainWindow implements PrinterObserver {
             }
             LOGGER.info("new service {}", service.getConnectionUrl());
             Printer newPrinter = printerFactory.create(service);
+            newPrinter.addObserver(this);
             printers.addElement(newPrinter);
         }
     }
