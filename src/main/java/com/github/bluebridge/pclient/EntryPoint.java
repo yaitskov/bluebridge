@@ -17,13 +17,15 @@ public class EntryPoint {
         LOGGER.debug("init BlueTooth layer");
         BlueToothPrinterBus.setServiceName("BlueBridgeService");
         BlueToothPrinterBus.setServiceUuid("31212f0c68af4fbf8dbe6bbaf7aa432a");
+        PrinterBus bus;
         try {
-            BlueToothPrinterBus.getBus();
+            bus = BlueToothPrinterBus.getBus();
         } catch (BluetoothStateException e) {
             LOGGER.error("failed to init BlueCove", e);
+            return;
         }
 
         LOGGER.debug("launch swing interface");
-        new MainWindow();
+        new MainWindow(bus, new PrinterFactoryImpl());
     }
 }

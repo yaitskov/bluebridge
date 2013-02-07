@@ -40,4 +40,6 @@ public interface Printer {
      * Close RFCOMM connection.
      */
     void disconnect() throws IOException;
+
+    void addObserver(PrinterObserver observer);
 }

@@ -17,7 +17,7 @@ import java.io.IOException;
  * <p/>
  * Daneel Yaitskov
  */
-public class MainWindow {
+public class MainWindow implements PrinterObserver {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MainWindow.class);
 
@@ -47,8 +47,13 @@ public class MainWindow {
     private JList printerList;
     private DefaultListModel printers;
     private Thread updatePrinterListThread;
+    private PrinterBus printerBus;
+    private PrinterFactory printerFactory;
 
-    public MainWindow() {
+    public MainWindow(PrinterBus bus, PrinterFactory factory) {
+        printerBus = bus;
+        this.printerFactory = factory;
+
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -73,6 +78,7 @@ public class MainWindow {
         printerList = new JList();
         printers = new DefaultListModel();
         printerList.setModel(printers);
+        printerList.setCellRenderer(new PrinterCellRenderer());
 //        printerList.setMinimumSize(new Dimension(100, 300));
 //        printerList.setMaximumSize(new Dimension(100, 800));
 ////        printerList.setPreferredSize(new Dimension(300,300));
@@ -233,11 +239,10 @@ public class MainWindow {
             LOGGER.info("update printer list thread is still alive");
             return;
         }
-        final PrinterBus bus = BlueToothPrinterBus.getBus();
         updatePrinterListThread = new Thread("update-device-list") {
             @Override
             public void run() {
-                final java.util.List<PrinterServiceId> services = bus.findAllPrinters();
+                final java.util.List<PrinterServiceId> services = printerBus.findAllPrinters();
                 SwingUtilities.invokeLater(
                         new Runnable() {
                             @Override
@@ -263,8 +268,13 @@ public class MainWindow {
                 }
             }
             LOGGER.info("new service {}", service.getConnectionUrl());
-            Printer newPrinter = new PrinterImpl(service);
+            Printer newPrinter = printerFactory.create(service);
             printers.addElement(newPrinter);
         }
+    }
+
+    @Override
+    public void newStatus(Printer p, PrinterStatus newStatus) {
+        printerList.repaint();
     }
 }

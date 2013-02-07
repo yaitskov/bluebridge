@@ -15,6 +15,11 @@ public class NullPrinter implements Printer {
             NullPrinter.class);
 
     @Override
+    public void addObserver(PrinterObserver observer) {
+       // do nothing
+    }
+
+    @Override
     public PrinterStatus getStatus() {
         return PrinterStatus.NA;
     }

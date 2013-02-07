@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Daneel Yaitskov
@@ -14,10 +16,17 @@ public class PrinterImpl implements Printer {
 
     private PrinterServiceId serviceInfo;
     private PrinterStatus status;
+    private List<PrinterObserver> observers;
+
+    @Override
+    public void addObserver(PrinterObserver observer) {
+        observers.add(observer);
+    }
 
     public PrinterImpl(PrinterServiceId serviceInfo) {
         this.serviceInfo = serviceInfo;
         status = PrinterStatus.NA;
+        observers = new LinkedList<PrinterObserver>();
     }
 
     @Override
@@ -56,11 +65,12 @@ public class PrinterImpl implements Printer {
 
     @Override
     public void connect() throws IOException {
-
+        LOGGER.debug("start connecting to printer");
     }
 
     @Override
     public void disconnect() throws IOException {
+        LOGGER.debug("close connection with printer");
 
     }
 }
