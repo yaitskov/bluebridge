@@ -1,5 +1,6 @@
 package com.github.bluebridge;
 
+import com.github.bluebridge.trash.EchoServer;
 import org.junit.Ignore;
 import org.junit.Test;
 

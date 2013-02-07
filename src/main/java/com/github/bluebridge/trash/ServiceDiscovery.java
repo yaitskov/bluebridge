@@ -1,4 +1,4 @@
-package com.github.bluebridge;
+package com.github.bluebridge.trash;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

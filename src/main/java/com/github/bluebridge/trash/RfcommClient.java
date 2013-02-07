@@ -1,5 +1,7 @@
-package com.github.bluebridge;
+package com.github.bluebridge.trash;
 
+import com.github.bluebridge.rfcomm.SafeReader;
+import com.github.bluebridge.rfcomm.SafeWriter;
 import org.apache.commons.lang3.StringUtils;
 import org.dan.lastjcl.ScalUtils;
 import org.slf4j.Logger;

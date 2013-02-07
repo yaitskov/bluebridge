@@ -1,4 +1,4 @@
-package com.github.bluebridge;
+package com.github.bluebridge.trash;
 
 
 import org.apache.commons.io.IOUtils;
@@ -9,10 +9,7 @@ import javax.bluetooth.*;
 import javax.microedition.io.Connector;
 import javax.microedition.io.StreamConnection;
 import javax.microedition.io.StreamConnectionNotifier;
-import java.io.DataInputStream;
-import java.io.EOFException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 
 
 public class EchoServer {
