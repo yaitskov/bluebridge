@@ -46,6 +46,7 @@ public class MainWindow {
      */
     private JList printerList;
     private DefaultListModel printers;
+    private Thread updatePrinterListThread;
 
     public MainWindow() {
         SwingUtilities.invokeLater(new Runnable() {
@@ -70,7 +71,6 @@ public class MainWindow {
 
         printers = new DefaultListModel();
         printerList.setModel(printers);
-//        ((DefaultListModel) printers).addElement("no printers");
         // hook click on printer to connect
         printerList.addListSelectionListener(
                 new ListSelectionListener() {
@@ -102,6 +102,7 @@ public class MainWindow {
 
     private void buildMainFrame() {
         mainFrame = new JFrame();
+        mainFrame.setTitle("Blue Bridge");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setContentPane(mainPanel);
 
@@ -201,10 +202,30 @@ public class MainWindow {
      * Find new printer services and merge them to list
      */
     public void updatePrinterList() throws BluetoothStateException {
-        PrinterBus bus = BlueToothPrinterBus.getBus();
+        if (updatePrinterListThread != null
+                && updatePrinterListThread.isAlive()) {
+            LOGGER.info("update printer list thread is still alive");
+            return;
+        }
+        final PrinterBus bus = BlueToothPrinterBus.getBus();
+        updatePrinterListThread = new Thread("update-device-list") {
+            @Override
+            public void run() {
+                final java.util.List<PrinterServiceId> services = bus.findAllPrinters();
+                SwingUtilities.invokeLater(
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                mergeNewPrinters(services);
+                            }
+                        }
+                );
+            }
+        };
+        updatePrinterListThread.start();
+    }
 
-        java.util.List<PrinterServiceId> services = bus.findAllPrinters();
-
+    public void mergeNewPrinters(java.util.List<PrinterServiceId> services) {
         nextPrinter:
         for (PrinterServiceId service : services) {
             for (int i = 0; i < printers.getSize(); ++i) {

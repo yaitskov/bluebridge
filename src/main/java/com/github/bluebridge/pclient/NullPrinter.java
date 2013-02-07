@@ -1,11 +1,18 @@
 package com.github.bluebridge.pclient;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 
 /**
+ * Stub if printer list is empty. Or no one is selected.
  * Daneel Yaitskov
  */
 public class NullPrinter implements Printer {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+            NullPrinter.class);
 
     @Override
     public PrinterStatus getStatus() {
@@ -14,36 +21,42 @@ public class NullPrinter implements Printer {
 
     @Override
     public void startPrint() {
-
+        LOGGER.info("there is not a selected printer");
     }
 
     @Override
     public void abortPrint() {
-
+        LOGGER.info("there is not a selected printer");
     }
 
     @Override
     public void pause() {
-
+        LOGGER.info("there is not a selected printer");
     }
 
     @Override
     public void resume() {
-
+        LOGGER.info("there is not a selected printer");
     }
 
     @Override
     public PrinterServiceId getInfo() {
-        return new PrinterServiceId();
+        LOGGER.info("there is not a selected printer");
+        PrinterServiceId result = new PrinterServiceId();
+        result.setDeviceId("stub");
+        result.setConnectionUrl("btspp://stub");
+        result.setLongUuid("stub");
+        result.setServiceName("stub service");
+        return result;
     }
 
     @Override
     public void connect() throws IOException {
-
+        LOGGER.info("there is not a selected printer");
     }
 
     @Override
     public void disconnect() throws IOException {
-
+        LOGGER.info("there is not a selected printer");
     }
 }
