@@ -1,5 +1,9 @@
 package com.github.bluebridge.pclient;
 
+import com.github.bluebridge.pclient.form.MainWindow;
+import com.github.bluebridge.pclient.printer.BlueToothPrinterBus;
+import com.github.bluebridge.pclient.printer.PrinterBus;
+import com.github.bluebridge.pclient.printer.PrinterFactoryImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

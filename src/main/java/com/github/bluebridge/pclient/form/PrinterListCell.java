@@ -1,4 +1,7 @@
-package com.github.bluebridge.pclient;
+package com.github.bluebridge.pclient.form;
+
+import com.github.bluebridge.pclient.printer.Printer;
+import com.github.bluebridge.pclient.printer.PrinterStatus;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

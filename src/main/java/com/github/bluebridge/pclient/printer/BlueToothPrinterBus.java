@@ -1,5 +1,7 @@
-package com.github.bluebridge.pclient;
+package com.github.bluebridge.pclient.printer;
 
+import com.github.bluebridge.pclient.discovery.PrinterServiceDiscovery;
+import com.github.bluebridge.pclient.discovery.BlueToothDeviceDiscovery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

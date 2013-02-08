@@ -1,5 +1,7 @@
-package com.github.bluebridge.pclient;
+package com.github.bluebridge.pclient.form;
 
+import com.github.bluebridge.pclient.mockup.NullPrinter;
+import com.github.bluebridge.pclient.printer.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

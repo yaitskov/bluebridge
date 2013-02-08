@@ -1,4 +1,4 @@
-package com.github.bluebridge.trash;
+package com.github.bluebridge.pclient.layout;
 
 import java.awt.Component;
 import java.awt.Container;
@@ -9,6 +9,10 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
+ * This is part of {@link LimitedWidthLayout}.
+ * It's a core algorithm. It's to complex to be a method.
+ *
+ *
  * Daneel Yaitskov
  */
 public class LimitedLayouter {
@@ -36,6 +40,13 @@ public class LimitedLayouter {
         }
     }
 
+    /**
+     * Gets average width of an child component.
+     * Set width for components whose limits don't fit
+     * average width select their max or min.
+     * If there isn't any component with violated width
+     * set rest components average width.
+     */
     public void compact() {
         while (!withNoWidth.isEmpty()) {
             Iterator<Integer> iter = withNoWidth.iterator();

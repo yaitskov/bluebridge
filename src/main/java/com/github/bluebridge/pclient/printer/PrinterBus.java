@@ -1,4 +1,4 @@
-package com.github.bluebridge.pclient;
+package com.github.bluebridge.pclient.printer;
 
 import java.util.List;
 

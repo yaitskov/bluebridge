@@ -1,4 +1,4 @@
-package com.github.bluebridge.trash;
+package com.github.bluebridge.pclient.layout;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,6 +7,21 @@ import org.slf4j.LoggerFactory;
 import java.awt.*;
 
 /**
+ * Layout in one line (horizontally) 1 or more components.
+ *
+ * They are have same height that equal to height of container
+ * (minus insets).
+ * And width of each component dynamically stretched to
+ * fill all width space of parent container but
+ * maximum and minimum width of a component are taken into
+ * account.
+ *
+ * So this layout manager require to specify all 3 sizes:
+ * <ul>
+ *     <li>minimum size</li>
+ *     <li>preferred size. It cannot be less than minimum size.</li>
+ *     <li>maximum size</li>
+ * </ul>
  * Daneel Yaitskov
  */
 public class LimitedWidthLayout implements LayoutManager {
@@ -45,6 +60,8 @@ public class LimitedWidthLayout implements LayoutManager {
             height = 0.0;
         }
         height += insets.bottom + insets.top;
+        LOGGER.debug("preferred layout width {} and height {}",
+                width, height);
         return new Dimension((int) width, height.intValue());
     }
 
@@ -60,6 +77,8 @@ public class LimitedWidthLayout implements LayoutManager {
             width += minimumSize.getWidth();
         }
         height += insets.bottom + insets.top;
+        LOGGER.debug("minimum layout width {} and height {}",
+                width, height);
         return new Dimension((int) width, (int) height);
     }
 

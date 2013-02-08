@@ -1,4 +1,4 @@
-package com.github.bluebridge.pclient;
+package com.github.bluebridge.pclient.form;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;

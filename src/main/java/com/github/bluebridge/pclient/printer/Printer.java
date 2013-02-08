@@ -1,7 +1,6 @@
-package com.github.bluebridge.pclient;
+package com.github.bluebridge.pclient.printer;
 
 import java.io.File;
-import java.io.IOError;
 import java.io.IOException;
 
 /**

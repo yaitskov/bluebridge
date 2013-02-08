@@ -1,6 +1,8 @@
-package com.github.bluebridge.pclient;
+package com.github.bluebridge.pclient.mockup;
 
-import javax.swing.*;
+import com.github.bluebridge.pclient.form.MainWindow;
+import com.github.bluebridge.pclient.printer.*;
+
 import java.util.ArrayList;
 import java.util.List;
 

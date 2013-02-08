@@ -1,4 +1,4 @@
-package com.github.bluebridge.pclient;
+package com.github.bluebridge.pclient.printer;
 
 /**
  * Unique identifies 3d printer and its SPP service.

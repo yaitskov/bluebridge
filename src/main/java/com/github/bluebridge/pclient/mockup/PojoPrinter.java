@@ -1,5 +1,9 @@
-package com.github.bluebridge.pclient;
+package com.github.bluebridge.pclient.mockup;
 
+import com.github.bluebridge.pclient.printer.Printer;
+import com.github.bluebridge.pclient.printer.PrinterObserver;
+import com.github.bluebridge.pclient.printer.PrinterServiceId;
+import com.github.bluebridge.pclient.printer.PrinterStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -7,7 +11,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 

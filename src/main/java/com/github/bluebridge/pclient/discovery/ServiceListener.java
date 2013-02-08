@@ -1,7 +1,9 @@
-package com.github.bluebridge.pclient;
+package com.github.bluebridge.pclient.discovery;
 
+import com.github.bluebridge.pclient.printer.PrinterServiceId;
+import com.github.bluebridge.pclient.SkipException;
+import com.github.bluebridge.pclient.printer.BlueToothPrinterBus;
 import com.google.gson.Gson;
-import com.intel.bluetooth.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,7 +1,8 @@
 package com.github.bluebridge.trash;
 
-import com.github.bluebridge.pclient.NullPrinter;
-import com.github.bluebridge.pclient.PrinterCellRenderer;
+import com.github.bluebridge.pclient.layout.LimitedWidthLayout;
+import com.github.bluebridge.pclient.mockup.NullPrinter;
+import com.github.bluebridge.pclient.form.PrinterCellRenderer;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

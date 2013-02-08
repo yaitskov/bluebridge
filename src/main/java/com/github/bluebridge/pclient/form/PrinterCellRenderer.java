@@ -1,7 +1,6 @@
-package com.github.bluebridge.pclient;
+package com.github.bluebridge.pclient.form;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.github.bluebridge.pclient.printer.Printer;
 
 import javax.swing.*;
 import java.awt.*;
