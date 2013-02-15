@@ -75,6 +75,8 @@
             <properties>
                 <entry.point>com.github.bluebridge.trash.RxTxEntryPoint</entry.point>
             </properties>
+
+
         </profile>
         <profile>
             <id>rfclient</id>
@@ -105,11 +107,42 @@
     </profiles>
 
     <dependencies>
+        <!--<dependency>-->
+            <!--<groupId>com.github.mcpat.gcf</groupId>-->
+            <!--<artifactId>gcf-comm-rxtx</artifactId>-->
+            <!--<version>0.6</version>-->
+        <!--</dependency>-->
         <dependency>
-            <groupId>org.rxtx</groupId>
-            <artifactId>rxtx</artifactId>
-            <version>2.1.7</version>
-        </dependency>
+        <groupId>com.neuronrobotics</groupId>
+        <artifactId>nrjavaserial</artifactId>
+        <version>3.7.5.1</version>
+    </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.bidib.jbidib.org.qbang.rxtx</groupId>-->
+            <!--<artifactId>rxtxcomm</artifactId>-->
+            <!--<version>2.2</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>rxtxc</groupId>-->
+            <!--<artifactId>rxtxc</artifactId>-->
+            <!--<version>2.0</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>rxtxc</groupId>-->
+            <!--<artifactId>rxtxc-lin</artifactId>-->
+            <!--<version>2.0</version>-->
+        <!--</dependency>-->
+
+        <!--<dependency>-->
+            <!--<groupId>io.netty</groupId>-->
+            <!--<artifactId>netty-transport-rxtx</artifactId>-->
+            <!--<version>4.0.0.Beta1</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.rxtx</groupId>-->
+            <!--<artifactId>rxtx</artifactId>-->
+            <!--<version>2.1.7</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>net.sf.bluecove</groupId>
             <artifactId>bluecove</artifactId>
