@@ -1,4 +1,4 @@
-package com.github.bluebridge;
+package com.github.bluebridge.rfcomm;
 
 import org.apache.commons.lang3.StringUtils;
 import org.dan.lastjcl.ScalUtils;
@@ -6,8 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.nio.ByteBuffer;
-import java.nio.IntBuffer;
 import java.util.concurrent.TimeoutException;
 
 /**

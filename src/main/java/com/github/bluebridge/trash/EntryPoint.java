@@ -1,10 +1,9 @@
-package com.github.bluebridge;
+package com.github.bluebridge.trash;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.bluetooth.*;
-import javax.microedition.io.Connector;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
